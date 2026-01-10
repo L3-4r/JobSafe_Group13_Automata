@@ -2,14 +2,13 @@ import re
 
 class SymbolMapper:
     def __init__(self):
-        # 1. Define the Dictionary (Design v1.3 - Stricter Keywords)
+        # 1. Define the Dictionary
         self.rules = {
-            # H: Removed generic "contract" to avoid false matches in sentences
+            
             'H': ['employment agreement', 'contract of employment', 'know all men', 'service agreement', 'letter of offer'],
             
             'R': ['position', 'job title', 'designation', 'hired as', 'rank'],
             
-            # D: Removed generic "term" to avoid matching "termination"
             'D': ['term of employment', 'effective date', 'probationary', 'start date', 'period of employment', 'duration'], 
             
             'S': ['duties', 'responsibilities', 'functions', 'deliverables', 'scope of work', 'obligations', 'job description'],
@@ -36,7 +35,7 @@ class SymbolMapper:
 
         words = clean_line.split()
         
-        # LOGIC PATCH: Relaxed Smart Filter
+        #discrepany filter (temporary)
         target_text = clean_line 
         
         # Only truncate if it's REALLY long to capture keywords mid-sentence
@@ -45,12 +44,12 @@ class SymbolMapper:
 
         for symbol, keywords in self.rules.items():
             for keyword in keywords:
-                # Use word boundary check or exact phrase match
+              
                 if keyword in target_text:
                     return symbol
         
         return None
-# --- Quick Test Block (For verification) ---
+# Quick Test Block
 if __name__ == "__main__":
     mapper = SymbolMapper()
     
